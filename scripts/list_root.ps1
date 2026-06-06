@@ -1,0 +1,1 @@
+Get-ChildItem 'C:\' -Force -ErrorAction SilentlyContinue | Select-Object Name, FullName, PSIsContainer | Format-Table -AutoSize

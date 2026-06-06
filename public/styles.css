@@ -1,0 +1,38 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f7fa; color: #333; }
+#app { max-width: 500px; margin: 0 auto; min-height: 100vh; background: white; padding: 20px; }
+.screen { display: none; }
+.screen.active { display: block; }
+h1 { color: #2563eb; font-size: 32px; margin-bottom: 8px; text-align:center; }
+h2 { margin: 20px 0; color: #1e293b; }
+p { text-align:center; margin-bottom:20px; color:#64748b; }
+input, select, button { width: 100%; padding: 14px; margin: 8px 0; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 16px; }
+button { background: #2563eb; color: white; border: none; cursor: pointer; font-weight: 600; }
+button:hover { background: #1d4ed8; }
+.big-btn { padding: 18px; font-size: 18px; margin: 10px 0; }
+.stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 20px 0; }
+.card { background: #eff6ff; padding: 20px; border-radius: 10px; text-align: center; }
+.card h3 { font-size: 28px; color: #2563eb; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+header button { width: auto; padding: 8px 16px; background: #ef4444; }
+#clock-result { margin: 20px 0; padding: 15px; border-radius: 8px; background: #dcfce7; display: none; }
+.staff-item, .payroll-item, .leave-item, .payment-item { padding: 12px; background: #f8fafc; margin: 8px 0; border-radius: 8px; border-left: 4px solid #2563eb; }
+.payment-item.success { border-left-color: #22c55e; }
+.payment-item.failed { border-left-color: #ef4444; }
+.payment-item.pending { border-left-color: #f59e0b; }
+label { display: block; margin: 10px 0; }
+.pay-btn { background: #22c55e; margin-top: 8px; }
+.pay-btn:hover { background: #16a34a; }
+.approve-btn { background: #22c55e; width: auto; padding: 6px 12px; margin: 4px 2px; font-size: 13px; }
+.reject-btn { background: #ef4444; width: auto; padding: 6px 12px; margin: 4px 2px; font-size: 13px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge.success { background: #dcfce7; color: #16a34a; }
+.badge.failed { background: #fee2e2; color: #dc2626; }
+.badge.pending { background: #fef9c3; color: #b45309; }
+.badge.approved { background: #dcfce7; color: #16a34a; }
+.badge.rejected { background: #fee2e2; color: #dc2626; }
+@media print {
+  body * { visibility: hidden; }
+  #qr-box, #qr-box *, #qr-staff-name, #qr-staff-pin { visibility: visible; }
+  #qr-box { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); }
+}

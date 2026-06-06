@@ -1,0 +1,26 @@
+# Node
+node_modules/
+
+# Android build files
+android/.gradle/
+android/app/build/
+android/gradle/wrapper/gradle-8.0-full/
+android/gradle/wrapper/gradle-8.0-bin.zip
+android/gradle/wrapper/gradle-8.0.zip
+
+# Output packages
+release/*.apk
+release/*.zip
+
+# Java / build artifacts
+temurin17/
+temurin17.zip
+
+# Signing and logs
+android/release-keystore.jks
+gradle-build-log.txt
+
+# IDE files
+.vscode/
+*.iml
+

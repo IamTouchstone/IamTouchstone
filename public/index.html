@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clikko - Staff Clock In</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <div id="setup-screen" class="screen active">
+    <h1>Clikko</h1><p>Clock in. Track hours. Pay staff.</p>
+    <input id="org-name" placeholder="Organization Name" />
+    <select id="org-type">
+      <option value="Retail Shop">Retail Shop</option>
+      <option value="Supermarket">Supermarket</option>
+      <option value="Restaurant">Restaurant</option>
+      <option value="School">School</option>
+      <option value="Clinic">Clinic</option>
+      <option value="Custom">Custom</option>
+    </select>
+    <input id="open-time" type="time" value="08:00" />
+    <input id="close-time" type="time" value="17:00" />
+    <button onclick="createOrg()">Create Organization</button>
+  </div>
+
+  <div id="dashboard" class="screen">
+    <header><h2 id="org-title"></h2><button onclick="logout()">Logout</button></header>
+    <div class="stats">
+      <div class="card"><h3 id="present-count">0</h3><p>Present</p></div>
+      <div class="card"><h3 id="late-count">0</h3><p>Late</p></div>
+      <div class="card"><h3 id="absent-count">0</h3><p>Absent</p></div>
+    </div>
+    <div class="actions">
+      <button class="big-btn" onclick="showScreen('clockin')">Clock In/Out</button>
+      <button class="big-btn" onclick="showScreen('staff')">Manage Staff</button>
+      <button class="big-btn" onclick="showScreen('payroll')">Payroll</button>
+      <button class="big-btn" onclick="showScreen('payments')">Payment History</button>
+      <button class="big-btn" onclick="showScreen('leave')">Leave Requests</button>
+      <button class="big-btn" onclick="showScreen('settings')">Settings</button>
+    </div>
+  </div>
+
+  <div id="clockin" class="screen">
+    <h2>Clock In / Out</h2>
+    <div style="display:flex; gap:10px; margin-bottom:15px;">
+      <button style="flex:1" onclick="startPinMode()">PIN Mode</button>
+      <button style="flex:1" onclick="startQRMode()">Camera QR Mode</button>
+    </div>
+    <div id="pin-mode">
+      <input id="pin-input" type="password" maxlength="4" placeholder="Enter 4-digit PIN" />
+      <button onclick="clockInOut()">Submit</button>
+    </div>
+    <div id="qr-mode" style="display:none;">
+      <div id="qr-reader" style="width:100%; max-width:400px; margin:0 auto;"></div>
+      <button onclick="stopQRMode()" style="background:#ef4444;">Stop Camera</button>
+    </div>
+    <div id="clock-result"></div>
+    <button onclick="showScreen('dashboard')">Back</button>
+  </div>
+
+  <div id="staff" class="screen">
+    <h2>Staff</h2>
+    <input id="staff-name" placeholder="Full Name" />
+    <input id="staff-phone" placeholder="Bank Account Number" />
+    <select id="staff-bank">
+      <option value="">Select Bank</option>
+      <option value="044">Access Bank</option>
+      <option value="063">Access Bank (Diamond)</option>
+      <option value="050">Ecobank</option>
+      <option value="070">Fidelity Bank</option>
+      <option value="011">First Bank</option>
+      <option value="214">FCMB</option>
+      <option value="058">GTB</option>
+      <option value="030">Heritage Bank</option>
+      <option value="301">Jaiz Bank</option>
+      <option value="082">Keystone Bank</option>
+      <option value="076">Polaris Bank</option>
+      <option value="221">Stanbic IBTC</option>
+      <option value="232">Sterling Bank</option>
+      <option value="100">SunTrust Bank</option>
+      <option value="032">Union Bank</option>
+      <option value="033">UBA</option>
+      <option value="215">Unity Bank</option>
+      <option value="035">Wema Bank</option>
+      <option value="057">Zenith Bank</option>
+    </select>
+    <input id="staff-salary" type="number" placeholder="Monthly Salary ₦" />
+    <input id="staff-pin" type="password" maxlength="4" placeholder="4-digit PIN" />
+    <button onclick="addStaff()">Add Staff</button>
+    <div id="staff-list"></div>
+    <button onclick="showScreen('dashboard')">Back</button>
+  </div>
+
+  <div id="qr-modal" class="screen">
+    <h2>Staff ID Card</h2>
+    <div id="qr-box" style="text-align:center; padding:20px; background:white; border-radius:10px;"></div>
+    <p id="qr-staff-name" style="text-align:center; margin-top:10px; font-weight:bold;"></p>
+    <p id="qr-staff-pin" style="text-align:center;"></p>
+    <button onclick="printQR()">Print ID Card</button>
+    <button onclick="showScreen('staff')">Close</button>
+  </div>
+
+  <div id="payroll" class="screen">
+    <h2>Payroll - Current Month</h2>
+    <button onclick="generatePayroll()">Generate Payroll</button>
+    <div id="payroll-list"></div>
+    <button onclick="showScreen('dashboard')">Back</button>
+  </div>
+
+  <div id="payroll-modal" class="screen">
+    <h2>Preview Payment</h2>
+    <div id="pay-preview" style="background:#f8fafc; padding:15px; border-radius:8px; margin:15px 0;"></div>
+    <label>Days Worked: <input id="pay-days" type="number" value="30" min="0" max="31" oninput="recalcPay()" /></label>
+    <label>Hours per Day: <input id="pay-hours" type="number" value="8" min="1" max="24" oninput="recalcPay()" /></label>
+    <label>Rate per Hour: ₦<span id="pay-rate">0</span></label>
+    <h3>Total: ₦<span id="pay-total">0</span></h3>
+    <button onclick="confirmPay()">Confirm &amp; Pay</button>
+    <button onclick="showScreen('payroll')" style="background:#64748b;">Cancel</button>
+  </div>
+
+  <div id="payments" class="screen">
+    <h2>Payment History</h2>
+    <div id="payments-list"></div>
+    <button onclick="showScreen('dashboard')">Back</button>
+  </div>
+
+  <div id="leave" class="screen">
+    <h2>Leave Requests</h2>
+    <input id="leave-staff" placeholder="Staff Name" />
+    <input id="leave-date" type="date" />
+    <input id="leave-reason" placeholder="Reason" />
+    <button onclick="requestLeave()">Request Leave</button>
+    <div id="leave-list"></div>
+    <button onclick="showScreen('dashboard')">Back</button>
+  </div>
+
+  <div id="settings" class="screen">
+    <h2>Settings</h2>
+    <label>Opening Time: <input id="set-open" type="time" /></label>
+    <label>Closing Time: <input id="set-close" type="time" /></label>
+    <button onclick="saveSettings()">Save Times</button>
+    <button onclick="showScreen('dashboard')">Back</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
