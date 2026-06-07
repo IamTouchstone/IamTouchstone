@@ -1,0 +1,9 @@
+bubblewrap build
+bubblewrap init --manifest=https://your-live-clikko-domain.web.app/manifest.json
+npm install -g @bubblewrap/cli
+npx cap sync
+npm run build
+npm install @capacitor/android
+npx cap add android
+npx cap init Clikko com.clikko.app --web-dir=dist
+npm install @capacitor/core @capacitor/cli

@@ -1,0 +1,12 @@
+import cors from 'cors';
+
+app.use(cors({
+  origin: [
+    'https://your-production-frontend.com',
+    'capacitor://localhost',
+    'http://localhost',
+    'file://'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
