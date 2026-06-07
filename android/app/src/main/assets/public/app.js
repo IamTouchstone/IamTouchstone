@@ -3,7 +3,7 @@ let staffList = [];
 let html5QrCode = null;
 let payPreview = {};
 
-const API_BASE = window.CLIKKO_API_URL || '/api';
+const API_BASE = window.CLIKKO_API_URL || 'http://10.0.2.2:3000/api';
 
 function apiPath(path) {
   if (path.startsWith(API_BASE)) return path;
