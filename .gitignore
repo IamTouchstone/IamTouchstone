@@ -18,6 +18,8 @@ temurin17.zip
 
 # Signing and logs
 android/release-keystore.jks
+android/key.properties
+android/local.properties
 gradle-build-log.txt
 
 # IDE files

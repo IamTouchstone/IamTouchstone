@@ -1,0 +1,6 @@
+{
+  "name": "Clikko",
+  "description": "A high-end minimalist mobile time-tracking app featuring intuitive tap controls, dynamic ripple animations, category categorization, and comprehensive analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

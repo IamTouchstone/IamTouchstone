@@ -1,0 +1,6 @@
+{
+	"appId": "com.clikko.local",
+	"appName": "Clikko",
+	"webDir": "public",
+	"bundledWebRuntime": false
+}

@@ -3,8 +3,16 @@ let staffList = [];
 let html5QrCode = null;
 let payPreview = {};
 
+const API_BASE = window.CLIKKO_API_URL || '/api/clikko';
+
+function apiPath(path) {
+  if (path.startsWith(API_BASE)) return path;
+  if (path.startsWith('/api/')) return path.replace(/^\/api/, API_BASE);
+  return `${API_BASE}/${path.replace(/^\//, '')}`;
+}
+
 async function api(url, options = {}) {
-  const res = await fetch(url, { headers: { 'Content-Type': 'application/json' }, ...options });
+  const res = await fetch(apiPath(url), { headers: { 'Content-Type': 'application/json' }, ...options });
   return res.json();
 }
 
@@ -53,7 +61,7 @@ async function updateDashboard() {
 
 function logout() {
   if (confirm('Reset organization? All data will be cleared.')) {
-    fetch('/api/org', { method: 'DELETE' })
+    fetch(apiPath('/api/org'), { method: 'DELETE' })
       .catch(() => {})
       .finally(() => location.reload());
   }

@@ -4,6 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "dev": "npm --prefix release/clikko-backend run dev",
+    "backend": "npm --prefix release/clikko-backend run dev",
     "android:init": "npx cap init clikko-local com.clikko.local --web-dir=public",
     "android:add": "npx cap add android",
     "android:copy": "npx cap copy android",
